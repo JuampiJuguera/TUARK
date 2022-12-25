@@ -11,7 +11,7 @@ const productTypeTitle = {
   pants: "Pantalones",
 };
 
-export const ProductCatalog = () => {
+export const ProductGalleryGrid = () => {
   const { state, handleAddToCart } = useContext(AppContext);
   const { products } = state;
   let { productType } = useParams();

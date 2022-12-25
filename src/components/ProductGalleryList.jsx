@@ -13,7 +13,7 @@ const sortProducts = (products, sortType) => {
   }
 };
 
-export const ProductList = ({ sortType }) => {
+export const ProductGalleryList = ({ sortType }) => {
   const { state, handleAddToCart } = useContext(AppContext);
   const { products } = state;
 

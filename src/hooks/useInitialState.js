@@ -3,9 +3,13 @@ import { db } from "../../firebase-config";
 import { collection, getDocs } from "firebase/firestore";
 
 export const useInitialState = () => {
+  const [state, setState] = useState({ cart: [], products: [] });
+
   useEffect(() => {
+    getCart();
     getIndumentary();
   }, []);
+
   function getIndumentary() {
     const indumentaryCollectionRef = collection(db, "indumentary");
     getDocs(indumentaryCollectionRef)
@@ -14,12 +18,23 @@ export const useInitialState = () => {
           ...doc.data(),
           id: doc.id,
         }));
-        setState({ cart: [], buyer: [], products: [...indumentary] });
+        setState({ ...state, products: [...indumentary] });
       })
       .catch((error) => console.log(error));
   }
 
-  const [state, setState] = useState({ cart: [], buyer: [], products: [] });
+  function getCart() {
+    const cartCollectionRef = collection(db, "cart");
+    getDocs(cartCollectionRef)
+      .then((response) => {
+        const cart = response.docs.map((doc) => ({
+          ...doc.data(),
+          id: doc.id,
+        }));
+        setState({ ...state, cart: [...cart] });
+      })
+      .catch((error) => console.log(error));
+  }
 
   const addToCart = (payload) => {
     setState({
@@ -35,21 +50,14 @@ export const useInitialState = () => {
     });
   };
 
-  const addToBuyer = (payload) => {
-    setState({
-      ...state,
-      buyer: [...state.buyer, payload],
-    });
-  };
-
-  const handleAddToCart = (product) => () => {
+  const handleAddToCart = (event, product) => {
+    event.preventDefault();
     addToCart(product);
   };
 
   return {
     addToCart,
     removeFromCart,
-    addToBuyer,
     state,
     handleAddToCart,
   };

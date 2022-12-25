@@ -9,7 +9,7 @@ import { Layout } from "../components/Layout";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { AppContext } from "../context/AppContext";
 import { useInitialState } from "../hooks/useInitialState";
-import { ProductCatalog } from "../components/ProductCatalog";
+import { ProductGalleryGrid } from "../components/ProductGalleryGrid";
 import { ProductPage } from "../containers/ProductPage.jsx";
 
 export const App = () => {
@@ -24,7 +24,7 @@ export const App = () => {
             <Route
               exact
               path="/catalog/:productType"
-              element={<ProductCatalog />}
+              element={<ProductGalleryGrid />}
             />
             <Route
               exact
